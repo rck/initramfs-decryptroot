@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# place into: /etc/initramfs-tools/hooks
+
+PREREQ=""
+
+prereqs() {
+	echo "$PREREQ"
+}
+
+case "$1" in
+	prereqs)
+		prereqs
+		exit 0
+	;;
+esac
+
+. "${CONFDIR}/initramfs.conf"
+. /usr/share/initramfs-tools/hook-functions
+
+mkdir -p "${DESTDIR}/sbin"
+
+cat <<EOF > "${DESTDIR}/sbin/decryptroot"
+#!/bin/sh
+
+echo -n "Enter password to unencrypt '/': "
+stty -echo
+read PASSWD
+stty echo
+echo -n \${PASSWD} >/lib/cryptsetup/passfifo
+echo
+EOF
+
+chmod 755 "${DESTDIR}/sbin/decryptroot"
