@@ -7,3 +7,5 @@ Assume you have your '/' file system encrypted and your server is (in a galaxy) 
 - Follow this nice [blog post](http://blog.neutrino.es/2011/unlocking-a-luks-encrypted-root-partition-remotely-via-ssh/)
 - Place that hook into /etc/initramfs-tools/hooks and regenerate the initramfs
 - Regenerate initramfs
+- Reboot
+- You can now connect to your server's initramfs via ssh and execute '/sbin/decryptroot'
